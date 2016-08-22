@@ -1,0 +1,80 @@
+{
+	"service": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_econ_nba/MapServer",
+	"extents": {
+		"initial": {
+			"xmin": -13288721.369912772,
+			"ymin": 4035936.3860100782,
+			"xmax": -13245012.962495957,
+			"ymax": 4075072.7842828752,
+			"spatialReference": {
+				"wkid": 102100,
+				"latestWkid": 3857
+			}
+		}
+	},
+	"exposure": {
+		"tooltips": {
+			"info-circle": {
+				"management": "Engineering-based solutions favor protection through extensive construction of sea walls, levees, and other armoring. Nature-based options favor ecosystems in this process including restoration of wetlands, dunes, other natural processes, and managed retreat. Note that both involve some level of engineeered and natural elements.",
+				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal storm flooding, coastal erosion, and rising tide levels) that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
+				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructures, agriculture, and ecosystem services (e.g. recreation).",
+				"climate": "Future planning horizons representing the impact of climate change on future damages and benefits."
+			},
+			"controls": {
+				"select": {
+					"discount": "Discount rate refers to the interest rate used to express future benefits at today’s equivalent value (or net present value). The discount rate discounts the value of future benefits by taking into account the loss in value of money due to time and the risk or uncertainty of future benefits.",
+					"storm":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance."
+				},
+				"checkbox": {
+					"ecosystem":"The net benefits and/or declines in services from the environment to humans converted to monetary units based on a habitat equivalency analysis (HEA). HEA produces estimates that are converted to service-acre years (SAY), or the equivalent of the ecosystem services provided by one acre of saltwater wetland for one year. The value of one SAY was assumed to be worth $5,000 per year."
+				}
+			},
+			"chart": {
+				"x-axis":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance.",
+				"y-axis":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy."
+			},
+			"results": {
+				"stat-number":"Difference in net benefits ($ Millions) between nature-based versus engineered-based adaptation strategies."
+			}
+		},
+		"controls": {
+			"management":[
+				{ "name": " -- ", "value": "" },
+				{ "name": "Engineering-based", "value": "armoring" },
+				{ "name": "Nature-based", "value": "nature-based" }
+			],
+			"hazard":[
+				{ "name": " -- ", "value": "total" },
+				{ "name": "Storm Flood", "value": "storm" },
+				{ "name": "Storm Wave", "value": "wave" },
+				{ "name": "Erosion", "value": "erosion" },
+				{ "name": "Rising Tide", "value": "tide" }
+			],
+			"damage":[
+				{ "name": " -- ", "value": "total" },
+				{ "name": "Public Buildings", "value": "building" },
+				{ "name": "Residential", "value": "residential" },
+				{ "name": "Agricultural", "value": "agricultural" },
+				{ "name": "Recreational", "value": "recreational" }
+			],
+			"discount":[
+				{ "name": "0%", "value": 0 },
+				{ "name": "1%", "value": 1 },
+				{ "name": "3%", "value": 3 },
+				{ "name": "5%", "value": 5 }
+			],
+			"storm":[
+				{ "name": "1 in 20", "value": 20 },
+				{ "name": "1 in 50", "value": 50 },
+				{ "name": "1 in 75", "value": 75 },
+				{ "name": "1 in 100", "value": 100 },
+				{ "name": "1 in 200", "value": 200 }
+			],
+			"slider": {
+				"climate": ["Current", "2030", "2060", "2100"],
+				"discountRate":[0, 1, 3, 5],
+				"storm":[20, 50, 75, 100, 200]
+			}
+		}
+	}
+}
