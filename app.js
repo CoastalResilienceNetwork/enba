@@ -983,8 +983,9 @@ define([
 				var minY = d3.min(_axis_data);
 				var maxY = d3.max(_axis_data);
 				var range = Math.abs(maxY-minY);
+				var fraction = (hazard != "wave" && hazard != "total") ? 0.35 : 0.15;
 				
-				this.chart.y.domain([minY-range*0.1, maxY+range*0.15]);
+				this.chart.y.domain([minY-range*0.1, maxY+range*fraction]);
 				this.chart.plot.select(".y.axis")
 					.transition()
 					.duration(500)

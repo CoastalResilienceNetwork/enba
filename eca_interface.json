@@ -15,14 +15,14 @@
 	"exposure": {
 		"tooltips": {
 			"info-circle": {
-				"management": "Engineering-based solutions favor protection through extensive construction of sea walls, levees, and other armoring. Nature-based options favor ecosystems in this process including restoration of wetlands, dunes, other natural processes, and managed retreat. Note that both involve some level of engineeered and natural elements.",
+				"management": "Engineering-based solutions favor protection through extensive construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of wetlands, dunes, other natural processes, and managed retreat. Note that both involve some level of engineeered and natural elements.",
 				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal storm flooding, coastal erosion, and rising tide levels) that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
-				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructures, agriculture, and ecosystem services (e.g. recreation).",
+				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructure (public buildings and residential), agriculture, and recreation.",
 				"climate": "Future planning horizons representing the impact of climate change on future damages and benefits."
 			},
 			"controls": {
 				"select": {
-					"discount": "Discount rate refers to the interest rate used to express future benefits at today’s equivalent value (or net present value). The discount rate discounts the value of future benefits by taking into account the loss in value of money due to time and the risk or uncertainty of future benefits.",
+					"discount": "Discount rate refers to the interest rate used to express future benefits at today’s equivalent value (or 'net present value'). The discount rate reduces the value of future benefits by taking into account the loss in monetary value over time and/or the uncertainty of future benefits (the higher the discount rate, the greater the uncertainty). A 3% discount rate is typically recommended for decision making.",
 					"storm":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance."
 				},
 				"checkbox": {
@@ -31,10 +31,10 @@
 			},
 			"chart": {
 				"x-axis":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance.",
-				"y-axis":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy."
+				"y-axis":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy. Benefits and costs are discounted and summed through each planning horizon to produce a 'net present value' of benefits."
 			},
 			"results": {
-				"stat-number":"Difference in net benefits ($ Millions) between nature-based versus engineered-based adaptation strategies."
+				"stat-number":"Difference in net benefits ($ millions) between nature-based versus engineering-based adaptation strategies."
 			}
 		},
 		"controls": {
