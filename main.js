@@ -25,21 +25,18 @@ define([
 		"dojo/_base/declare",
 		"framework/PluginBase",
 		"dojo/parser",
-		"dijit/registry",
 		"dojo/dom-class",
 		"dojo/dom-style",
+		"dojo/dom-attr",
 		"dojo/dom-geometry",
-		"dojo/_base/lang",
-		"dojo/_base/array",
-		"dojo/query",
 		 "d3",
 		"underscore",
 		"./app",
-		"dojo/text!plugins/enba/enba_data.json",
-		"dojo/text!plugins/enba/eca_interface.json",
+		"dojo/text!plugins/enba/data.json",
+		"dojo/text!plugins/enba/interface.json",
 		"dojo/text!./templates.html"
        ],
-       function (declare, PluginBase, parser, registry, domClass, domStyle, domGeom, lang, array, query, d3, _, enba, appData, appConfig, templates) {
+       function (declare, PluginBase, parser, domClass, domStyle, domAttr, domGeom, d3, _, enba, appData, appConfig, templates) {
            return declare(PluginBase, {
                toolbarName: "Economics of Nature-Based Adaptation",
                toolbarType: "sidebar",
@@ -54,40 +51,80 @@ define([
 			   _firstLoad: true,
 
                activate: function () {
+				    var self = this;
 					//process this._state if a populated object from setState exists
-					if (!_.isEmpty(this._state)) {
-						 for (var control in this._state.controls.radiocheck) {
-							 for (property in this._state.controls.radiocheck[control]) {
-								 this.enbaTool[control][property] = this._state.controls.radiocheck[control][property];
+					if (!_.isEmpty(this._state) && this._firstLoad) {
+						window.setTimeout(function() {
+							self.enbaTool.initializeMap();
+							 for (var control in self._state.controls.radiocheck) {
+								 for (property in self._state.controls.radiocheck[control]) {
+									 self.enbaTool[control][property] = self._state.controls.radiocheck[control][property];
+								 }
 							 }
-						 }
 
-						 if (!_.isUndefined(this.enbaTool._map.getLayer("enbaMapLayer"))) {
-							 this.enbaTool.updateLayer([]);
-						 }
-
-						 for (var control in this._state.controls.selects) {
-							 for (property in this._state.controls.selects[control]) {
-								 this.enbaTool[control][property] = this._state.controls.selects[control][property];
+							 for (var control in self._state.controls.selects) {
+								 for (property in self._state.controls.selects[control]) {
+									 self.enbaTool[control][property] = self._state.controls.selects[control][property];
+								 }
 							 }
-						 }
 
-						 for (var slider in this._state.controls.sliders) {
-							 for (property in this._state.controls.sliders[slider]) {
-								this.enbaTool[slider].set(property, this._state.controls.sliders[slider][property]);
+							 for (var slider in self._state.controls.sliders) {
+								 for (property in self._state.controls.sliders[slider]) {
+									self.enbaTool[slider].set(property, self._state.controls.sliders[slider][property]);
+								 }
 							 }
-						 }
-						 
-						 this.chart._filter_value =  this._state.controls.selects.discountRateSelect.value;
-						 this.chart._storm_value =  this._state.controls.selects.stormSelect.value;
+							 
+							var management = self.enbaTool.managementTypeSelect.value;
+							var hazard = self.enbaTool.hazardSelect.value;
+							var damage = self.enbaTool.damageSelect.value;
+							var climate = self.enbaTool._interface.exposure.controls.slider.climate[self.enbaTool.climateYearSliderDamages.get("value")];
+							
+							if (self.enbaTool.managementLayerCheckBox.checked) {
+								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.flatten(_.values(self.enbaTool._data.layers.management)));
+								if (management != "" && management != "existing") {
+									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.management[management]);
+									domAttr.set(self.enbaTool.managementLayerCheckBox, "disabled", false);
+								} else {
+									domAttr.set(self.enbaTool.managementLayerCheckBox, "disabled", true);
+								}
+								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
+							}
+							
+							if (self.enbaTool.hazardLayerCheckBox.checked) {
+								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.range(self.enbaTool._data.layers.hazard["all-layer-index"][0], self.enbaTool._data.layers.hazard["all-layer-index"][1]+1));
+								if (management != "" && management != "existing" && hazard != "total") {
+									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.hazard[management][hazard][climate]);
+									domAttr.set(self.enbaTool.hazardLayerCheckBox, "disabled", false);
+								} else {
+									domAttr.set(self.enbaTool.hazardLayerCheckBox, "disabled", true);
+								}
+								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
+							}
+							
+							if (self.enbaTool.damageLayerCheckBox.checked) {
+								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.range(self.enbaTool._data.layers.damage["all-layer-index"][0], self.enbaTool._data.layers.damage["all-layer-index"][1]+1));
+								if (hazard != "total" && damage != "total") {
+									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.damage[damage][management][hazard][climate]);
+									domAttr.set(self.enbaTool.damageLayerCheckBox, "disabled", false);
+								} else {
+									domAttr.set(self.enbaTool.damageLayerCheckBox, "disabled", true);
+								}
+								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
+							}
+							 
+							self.enbaTool.chart._filter_value =  self._state.controls.selects.discountRateSelect.value;
+							self.enbaTool.chart._storm_value =  self._state.controls.selects.stormSelect.value;
+							
+							self.enbaTool.updateLineChart();
+							self.enbaTool.updateExposureResults();
 
-						this._state = {};
+							self._state = {};
+						}, 2000);
+					} else {
+						this.enbaTool.showTool();
 					}
-
-					this.enbaTool.showTool();
 					
 					if (this._firstLoad) {
-						console.log(this);
 						domStyle.set(this.container.parentNode.parentNode, {
 							"left": (domGeom.getMarginBox(this.container.parentNode.parentNode).l + 30) + "px",
 							"top": (domGeom.getMarginBox(this.container.parentNode.parentNode).t + 30) + "px"
@@ -163,8 +200,6 @@ define([
 					   "checked": this.enbaTool.ecosystemCheckBox.checked,
 					   "disabled": this.enbaTool.ecosystemCheckBox.disabled
 				   }
-				   
-				   console.log(state);
 
                    return state;
 
