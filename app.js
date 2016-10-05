@@ -20,7 +20,6 @@ define([
 		"dijit/form/HorizontalSlider",
 		"dijit/form/HorizontalRuleLabels",
 		"dojox/form/RangeSlider",
-		"esri/layers/FeatureLayer",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/geometry/Extent",
 		"dojo/_base/html",
@@ -47,7 +46,6 @@ define([
 			HorizontalSlider,
 			HorizontalRuleLabels,
 			RangeSlider,
-			FeatureLayer,
 			DynamicMapServiceLayer,
 			Extent,
 			html

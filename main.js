@@ -54,8 +54,9 @@ define([
 				    var self = this;
 					//process this._state if a populated object from setState exists
 					if (!_.isEmpty(this._state) && this._firstLoad) {
+						this.enbaTool.initializeMap();
+						
 						window.setTimeout(function() {
-							self.enbaTool.initializeMap();
 							 for (var control in self._state.controls.radiocheck) {
 								 for (property in self._state.controls.radiocheck[control]) {
 									 self.enbaTool[control][property] = self._state.controls.radiocheck[control][property];
@@ -79,38 +80,37 @@ define([
 							var damage = self.enbaTool.damageSelect.value;
 							var climate = self.enbaTool._interface.exposure.controls.slider.climate[self.enbaTool.climateYearSliderDamages.get("value")];
 							
+							var visibleLayers = [];
 							if (self.enbaTool.managementLayerCheckBox.checked) {
-								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.flatten(_.values(self.enbaTool._data.layers.management)));
+								visibleLayers = _.difference(visibleLayers, _.flatten(_.values(self.enbaTool._data.layers.management)));
 								if (management != "" && management != "existing") {
-									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.management[management]);
+									visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.management[management]);
 									domAttr.set(self.enbaTool.managementLayerCheckBox, "disabled", false);
 								} else {
 									domAttr.set(self.enbaTool.managementLayerCheckBox, "disabled", true);
 								}
-								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
 							}
 							
 							if (self.enbaTool.hazardLayerCheckBox.checked) {
-								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.range(self.enbaTool._data.layers.hazard["all-layer-index"][0], self.enbaTool._data.layers.hazard["all-layer-index"][1]+1));
+								visibleLayers = _.difference(visibleLayers, _.range(self.enbaTool._data.layers.hazard["all-layer-index"][0], self.enbaTool._data.layers.hazard["all-layer-index"][1]+1));
 								if (management != "" && management != "existing" && hazard != "total") {
-									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.hazard[management][hazard][climate]);
+									visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.hazard[management][hazard][climate]);
 									domAttr.set(self.enbaTool.hazardLayerCheckBox, "disabled", false);
 								} else {
 									domAttr.set(self.enbaTool.hazardLayerCheckBox, "disabled", true);
 								}
-								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
 							}
 							
 							if (self.enbaTool.damageLayerCheckBox.checked) {
-								var visibleLayers = _.difference(self.enbaTool.mapLayer.visibleLayers, _.range(self.enbaTool._data.layers.damage["all-layer-index"][0], self.enbaTool._data.layers.damage["all-layer-index"][1]+1));
+								visibleLayers = _.difference(visibleLayers, _.range(self.enbaTool._data.layers.damage["all-layer-index"][0], self.enbaTool._data.layers.damage["all-layer-index"][1]+1));
 								if (hazard != "total" && damage != "total") {
-									var visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.damage[damage][management][hazard][climate]);
+									visibleLayers = _.union(visibleLayers, self.enbaTool._data.layers.damage[damage][management][hazard][climate]);
 									domAttr.set(self.enbaTool.damageLayerCheckBox, "disabled", false);
 								} else {
 									domAttr.set(self.enbaTool.damageLayerCheckBox, "disabled", true);
 								}
-								self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
 							}
+							self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
 							 
 							self.enbaTool.chart._filter_value =  self._state.controls.selects.discountRateSelect.value;
 							self.enbaTool.chart._storm_value =  self._state.controls.selects.stormSelect.value;
@@ -119,7 +119,7 @@ define([
 							self.enbaTool.updateExposureResults();
 
 							self._state = {};
-						}, 2000);
+						}, 1000);
 					} else {
 						this.enbaTool.showTool();
 					}
