@@ -15,7 +15,7 @@
 	"exposure": {
 		"tooltips": {
 			"info-circle": {
-				"management": "Engineering-based solutions favor protection through extensive construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of wetlands, dunes, other natural processes, and managed retreat. Note that both involve some level of engineeered and natural elements.",
+				"management": "Engineering-based solutions favor protection through construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of habitat and other natural processes.",
 				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal storm flooding, coastal erosion, and rising tide levels) that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
 				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructure (public buildings and residential), agriculture, and recreation.",
 				"climate": "Future planning horizons representing the impact of climate change on future damages and benefits."

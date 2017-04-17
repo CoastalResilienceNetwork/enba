@@ -40,13 +40,13 @@ define([
            return declare(PluginBase, {
                toolbarName: "Economics of Nature-Based Adaptation",
                toolbarType: "sidebar",
-               resizable: false,
+               hasHelp: false,
                showServiceLayersInLegend: true,
                allowIdentifyWhenActive: true,
                infoGraphic: "",
                pluginDirectory: "plugins/enba",
-               width: 515,
-			   height: "auto",
+               size: "custom",
+			   width: 510,
 			   _state: {},
 			   _firstLoad: true,
 
@@ -125,10 +125,6 @@ define([
 					}
 					
 					if (this._firstLoad) {
-						domStyle.set(this.container.parentNode.parentNode, {
-							"left": (domGeom.getMarginBox(this.container.parentNode.parentNode).l + 30) + "px",
-							"top": (domGeom.getMarginBox(this.container.parentNode.parentNode).t + 30) + "px"
-						});
 						this._firstLoad = false;
 					}
                },
@@ -148,6 +144,7 @@ define([
                         parseOnLoad: true
                    };
                    domClass.add(this.container, "claro");
+				   domClass.add(this.container, "plugin-enba");
 					this.enbaTool = new enba(this, appData, appConfig, templates);
 					this.enbaTool.initialize(this.enbaTool);
 					enbaTool = this.enbaTool;
