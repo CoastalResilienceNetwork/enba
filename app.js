@@ -528,7 +528,7 @@ define([
 				var _nba = _.first(array.filter(_nested[1].values, function(d) { return d.storm == self.chart._storm_value; }));
 				var diff = (ecosystem) ? _cca.net - (_nba.net + _nba.ecosystem) : _cca.net - _nba.net;
 				
-				var strategy_text = {"CCA": "engineered", "NBA": "natural" }
+				var strategy_text = {"CCA": "armored", "NBA": "natural" }
 				var strategy = (diff > 0) ? "CCA" : "NBA";
 				var strategy_alternative = (strategy == "CCA") ? "NBA" : "CCA";
 				
@@ -822,7 +822,7 @@ define([
 							self.updateExposureResults();
 						});
 				
-				var legendText = {"NBA": "nature-based", "CCA": "engineering-based"};
+				var legendText = {"NBA": "nature-based", "CCA": "armoring-based"};
 				var groups = d3.set(_data.map(function (d) { return d.type; })).values();
  				var legend = this.chart.plot.append("g")
 						.attr("class", "enba-legend-container");
