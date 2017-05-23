@@ -1,5 +1,5 @@
 {
-	"service": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
+	"service": "http://services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
 	"extents": {
 		"initial": {
 			"xmin": -13288721.369912772,

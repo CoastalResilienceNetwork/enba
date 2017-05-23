@@ -1,5 +1,5 @@
 {
-	"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
+	"url": "http://services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
 	"layers": {
 		"management": {
 			"all-layer-index": [1,5],
