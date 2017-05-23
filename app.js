@@ -7,6 +7,7 @@ define([
 		"dijit/layout/ContentPane",
 		"dojo/on",
 		"dojo/_base/array",
+		"dojo/_base/window",
 		"dojo/query",
 		"dojo/dom",
 		"dojo/dom-class",
@@ -33,6 +34,7 @@ define([
 			ContentPane,
 			on,
 			array,
+			win,
 			query,
 			dom,
 			domClass,
@@ -121,7 +123,7 @@ define([
 
 			this.hideTool = function(){
 				if (this.mapLayer && this.mapLayer.loaded) { 
-					this.mapLayer.hide();
+					//this.mapLayer.hide();
 				}
 			}
 			
@@ -175,13 +177,12 @@ define([
 						
 			this.loadInterface = function() {
 				var self = this;
-				domStyle.set(this._container, { "overflow": "visible", "max-height": "1000px;" });
 				
 				//empty layout containers
 			    this.cpExposure = new ContentPane({
 					id:"plugin-enba-" + self._map.id,
 					style: 'position:relative;;overflow: visible;',
-					className: 'plugin-enba'
+					className: 'cr-dojo-dijits'
 			    });
 			    this.cpExposure.startup();
 				this._container.appendChild(this.cpExposure.domNode);
@@ -190,7 +191,7 @@ define([
 			    this.createExposureChart();
 				
 				this.tip = domConstruct.create("div", { className: "enba-tooltip interface" });
-				this.cpExposure.containerNode.appendChild(this.tip);
+				win.body().appendChild(this.tip);
 				
 				on(this._map, "resize", function() {
 					
@@ -198,16 +199,14 @@ define([
 			}
 			
 			this.createExposureInputs = function(){
-				this.exposureInputsPane = new ContentPane({});
+				this.exposureInputsPane = new ContentPane();
 				this.cpExposure.domNode.appendChild(this.exposureInputsPane.domNode);
 			    domStyle.set(this.exposureInputsPane.containerNode, {
 					"position": "relative",
 					"overflow": "visible",
-					"background": "#f3f4f3",
-					"borderTop": "1px dotted #ccc",
+					"background": "#edf2f2",
 					"padding": "20px"
 				});
-				
 				
 				var table = domConstruct.create("table", {style:"position:relative;width: 100%;background: none;border: none; margin:0px 0px 20px 0px;"}, this.exposureInputsPane.containerNode);
 				var tr = domConstruct.create("tr", {}, table);
@@ -218,7 +217,7 @@ define([
 				// management controls
 				var managementTypeText = domConstruct.create("div", {
 					style:"position:relative;margin-bottom:5px;",
-					innerHTML: "<i class='fa fa-info-circle enba-" + this._map.id + " exposure-management'></i>&nbsp;<b>Adaptation Strategy:</b>"
+					innerHTML: "<i class='fa fa-question-circle enba-" + this._map.id + " exposure-management'></i>&nbsp;<b>Adaptation Strategy:</b>"
 				}, managementTd);
 				
 				var managementTypeSelectDiv = domConstruct.create("div", { 
@@ -285,7 +284,7 @@ define([
 				});
 				
 				// hazard controls
-				var hazardText = domConstruct.create("div", {style: "position:relative;margin-bottom:5px;", innerHTML: "<i class='fa fa-info-circle enba-" + this._map.id + " exposure-hazard'></i>&nbsp;<b>Hazard:</b>"}, hazardTd);
+				var hazardText = domConstruct.create("div", {style: "position:relative;margin-bottom:5px;", innerHTML: "<i class='fa fa-question-circle enba-" + this._map.id + " exposure-hazard'></i>&nbsp;<b>Hazard:</b>"}, hazardTd);
 				
 				var hazardSelectDiv = domConstruct.create("div", { className: "styled-select", style:"width:110px;display:inline-block;" }, hazardTd);
 				this.hazardSelect = dojo.create("select", { name: "hazard", "disabled": false }, hazardSelectDiv);
@@ -340,7 +339,7 @@ define([
 				});
 				
 				// damage controls
-				var damageEstimateText = domConstruct.create("div", {style: "position:relative;margin-bottom:5px;", innerHTML: "<i class='fa fa-info-circle enba-" + this._map.id + " exposure-damage'></i>&nbsp;<b>Damage Estimate:</b>"}, damageTd);
+				var damageEstimateText = domConstruct.create("div", {style: "position:relative;margin-bottom:5px;", innerHTML: "<i class='fa fa-question-circle enba-" + this._map.id + " exposure-damage'></i>&nbsp;<b>Damage Estimate:</b>"}, damageTd);
 				
 				var damageSelectDiv = domConstruct.create("div", { className: "styled-select", style:"width:130px;display:inline-block;" }, damageTd);
 				this.damageSelect = dojo.create("select", { name: "damage"}, damageSelectDiv);
@@ -382,7 +381,7 @@ define([
 				});
 				
 				//climate year slider
-			    var climateYearSliderLabel = domConstruct.create("div", {innerHTML: "<i class='fa fa-info-circle enba-" + this._map.id + " exposure-climate'></i>&nbsp;<b>Climate Year: </b>", style:"position:relative; width:100px; top:-7px; display:inline-block;"});
+			    var climateYearSliderLabel = domConstruct.create("div", {innerHTML: "<i class='fa fa-question-circle enba-" + this._map.id + " exposure-climate'></i>&nbsp;<b>Climate Year: </b>", style:"position:relative; width:100px; top:-10px; display:inline-block; margin-left:6px;"});
 				this.exposureInputsPane.containerNode.appendChild(climateYearSliderLabel);
 				this.climateYearSliderDamages = new HorizontalSlider({
 			        name: "climateYearSlider",
@@ -392,7 +391,7 @@ define([
 			        discreteValues: this._interface.exposure.controls.slider.climate.length,
 			        showButtons: false,
 					disabled: false,
-			        style: "width:355px; display:inline-block; margin:0px; background:none;",
+			        style: "width:340px; display:inline-block; margin:0px 0px 0px 10px; background:none;",
 			        onChange: function(value){
 						var management = self.managementTypeSelect.value;
 						var hazard = self.hazardSelect.value;
@@ -430,7 +429,7 @@ define([
 			    	container: 'bottomDecoration',
 			    	count: 0,
 			    	labels: this._interface.exposure.controls.slider.climate,
-			    	style: "margin-top: 5px; font-size:14px;"
+			    	style: "margin-top: 5px;"
 			    });
 			    this.climateYearSliderDamages.addChild(climateYearSliderLabels);
 				
@@ -453,14 +452,12 @@ define([
 			}
 			
 			this.createExposureResults = function(){
-				this.exposureMessagePane = new ContentPane({});
+				this.exposureMessagePane = new ContentPane();
 				dojo.place(this.exposureMessagePane.domNode, this.cpExposure.domNode);
 				domStyle.set(this.exposureMessagePane.containerNode, {
 					"position": "relative",
-					"overflow": "visible",
-					"background": "#f3f4f3",
-					"borderTop": "1px dotted #ccc",
-					"padding": "10px 0px 30px 0px"
+					"padding": "0px 8px 0px 8px",
+					"overflow": "visible"
 				});
 				
 				var div = domConstruct.create("div", { className: "results-note" }, this.exposureMessagePane.containerNode);
@@ -471,7 +468,7 @@ define([
 				
 				var discountRateSelectDiv = domConstruct.create("div",{
 					className: "styled-select results-select",
-					style:"width: 60px;"
+					style:"width: 50px;"
 				}, dom.byId("results-discount-" + this._map.id));
 				this.discountRateSelect = dojo.create("select", { name: "discount"}, discountRateSelectDiv);
 				dojo.forEach(this._interface.exposure.controls.discount, function(item) {
@@ -485,7 +482,7 @@ define([
 				
 				var stormSelectDiv = domConstruct.create("div",{
 					className: "styled-select results-select",
-					style:"width: 90px;"
+					style:"width: 80px;"
 				}, dom.byId("results-storm-" + this._map.id));
 				this.stormSelect = dojo.create("select", { name: "discount"}, stormSelectDiv);
 				dojo.forEach(this._interface.exposure.controls.storm, function(item) {
@@ -502,9 +499,9 @@ define([
 				this.chart._filter_value = this.discountRateSelect.value;
 				this.chart._storm_value = this.stormSelect.value;
 								
-				var checkBoxDiv = domConstruct.create("label", { for: "ecosystem-" + self._map.id, className:"styled-checkbox ecosystem-checkbox", style:"max-width:400px;position:relative;margin:0px 0px 0px 85px;" }, this.exposureMessagePane.containerNode);
+				var checkBoxDiv = domConstruct.create("label", { for: "ecosystem-" + self._map.id, className:"styled-checkbox ecosystem-checkbox", style:"max-width:400px;position:relative;margin:0px 0px 0px 55px;" }, this.exposureMessagePane.containerNode);
 				this.ecosystemCheckBox = domConstruct.create("input", { type:"checkbox", value:"ecosystem", name:"ecosystem", id:"ecosystem-" + self._map.id, checked:true }, checkBoxDiv);
-				var checkBoxLabel = domConstruct.create("div", { style:"max-width:400px;font-size:16px;", innerHTML: '<span>include benefits from investment in ecosystem services</span>'}, checkBoxDiv);
+				var checkBoxLabel = domConstruct.create("div", { style:"max-width:400px;", innerHTML: '<span>include benefits from investment in ecosystem services</span>'}, checkBoxDiv);
 				on(this.ecosystemCheckBox,"change", function(){
 					var _filter_value = self.discountRateSelect.value;
 					var checked = this.checked;
@@ -531,7 +528,7 @@ define([
 				var _nba = _.first(array.filter(_nested[1].values, function(d) { return d.storm == self.chart._storm_value; }));
 				var diff = (ecosystem) ? _cca.net - (_nba.net + _nba.ecosystem) : _cca.net - _nba.net;
 				
-				var strategy_text = {"CCA": "engineered", "NBA": "natural" }
+				var strategy_text = {"CCA": "armored", "NBA": "natural" }
 				var strategy = (diff > 0) ? "CCA" : "NBA";
 				var strategy_alternative = (strategy == "CCA") ? "NBA" : "CCA";
 				
@@ -551,7 +548,7 @@ define([
 				domStyle.set(this.exposureChartPane.containerNode, {
 					"position": "relative",
 					"overflow": "visible",
-					"borderTop": "1px dotted #ccc"
+					"padding": "0px 8px 0px 8px"
 				});
 				
 				var div = domConstruct.create("div", { className: "results-stat" }, this.exposureChartPane.containerNode);
@@ -603,7 +600,7 @@ define([
 				}, 2000);
 				
 				/* //discount rate slider
-			    var discountRateSliderLabel = domConstruct.create("div", {innerHTML: "<i class='fa fa-info-circle enba-" + this._map.id + " exposure-climateInfo'></i>&nbsp;<b>Discount Rate: </b>", style:"position:relative; width: 120px; top:-7px; margin: 10px 0px 10px 20px; display: inline-block"});
+			    var discountRateSliderLabel = domConstruct.create("div", {innerHTML: "<i class='fa fa-question-circle enba-" + this._map.id + " exposure-climateInfo'></i>&nbsp;<b>Discount Rate: </b>", style:"position:relative; width: 120px; top:-7px; margin: 10px 0px 10px 20px; display: inline-block"});
 				this.exposureChartPane.containerNode.appendChild(discountRateSliderLabel);
 				this.discountRateSlider = new HorizontalSlider({
 			        name: "discountRateSlider",
@@ -825,7 +822,7 @@ define([
 							self.updateExposureResults();
 						});
 				
-				var legendText = {"NBA": "nature-based", "CCA": "engineering-based"};
+				var legendText = {"NBA": "nature-based", "CCA": "armoring-based"};
 				var groups = d3.set(_data.map(function (d) { return d.type; })).values();
  				var legend = this.chart.plot.append("g")
 						.attr("class", "enba-legend-container");
@@ -1102,7 +1099,7 @@ define([
 
 			this.createTooltips = function() {
 				
-				on(query("i.fa-info-circle.enba-" + this._map.id), "mousemove", function(evt) {
+				on(query("i.fa-question-circle.enba-" + this._map.id), "mousemove", function(evt) {
 					var cssClass = _.last(domAttr.get(this, "class").split(" "));
 					var tab = _.first(cssClass.split("-"));
 					var control = _.last(cssClass.split("-"));
@@ -1110,7 +1107,7 @@ define([
 					self.showMessageDialog(this, message);
 				});
 				
-				on(query("i.fa-info-circle.enba-" + this._map.id), "mouseout", function() {
+				on(query("i.fa-question-circle.enba-" + this._map.id), "mouseout", function() {
 					self.hideMessageDialog();
 				});
 				
@@ -1179,7 +1176,7 @@ define([
 				self.tip.innerHTML = message;
 				domStyle.set(self.tip, { "display": "block" });
 				
-				var p = domGeom.position(self._container);
+				var p = domGeom.position(win.body());
 				var n = domGeom.position(node);
 				var t = domGeom.getMarginBox(self.tip);
 				

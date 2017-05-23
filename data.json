@@ -1,5 +1,5 @@
 {
-	"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_econ_nba/MapServer",
+	"url": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
 	"layers": {
 		"management": {
 			"all-layer-index": [1,5],

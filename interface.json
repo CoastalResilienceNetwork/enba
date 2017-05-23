@@ -1,5 +1,5 @@
 {
-	"service": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/Ventura_econ_nba/MapServer",
+	"service": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
 	"extents": {
 		"initial": {
 			"xmin": -13288721.369912772,
@@ -15,7 +15,7 @@
 	"exposure": {
 		"tooltips": {
 			"info-circle": {
-				"management": "Engineering-based solutions favor protection through extensive construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of wetlands, dunes, other natural processes, and managed retreat. Note that both involve some level of engineeered and natural elements.",
+				"management": "Armoring-based solutions favor protection through construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of habitat and other natural processes.",
 				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal storm flooding, coastal erosion, and rising tide levels) that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
 				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructure (public buildings and residential), agriculture, and recreation.",
 				"climate": "Future planning horizons representing the impact of climate change on future damages and benefits."
@@ -34,13 +34,13 @@
 				"y-axis":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy. Benefits and costs are discounted and summed through each planning horizon to produce a 'net present value' of benefits."
 			},
 			"results": {
-				"stat-number":"Difference in net benefits ($ millions) between nature-based versus engineering-based adaptation strategies."
+				"stat-number":"Difference in net benefits ($ millions) between nature-based versus armoring-based adaptation strategies."
 			}
 		},
 		"controls": {
 			"management":[
 				{ "name": " -- ", "value": "" },
-				{ "name": "Engineering-based", "value": "armoring" },
+				{ "name": "Armoring-based", "value": "armoring" },
 				{ "name": "Nature-based", "value": "nature-based" }
 			],
 			"hazard":[
