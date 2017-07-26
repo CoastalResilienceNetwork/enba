@@ -211,7 +211,7 @@ define([
 				//initialize an empty dynamic map service layer
 			    var mapUrl = this._interface.service;
 				
-				this.mapLayer = new DynamicMapServiceLayer(this._data.url, { id:"enbamapLayer" });
+				this.mapLayer = new DynamicMapServiceLayer(mapUrl, { id:"enbamapLayer" });
 				this._map.addLayer(this.mapLayer);
 				this.mapLayer.hide();
 				this.mapLayer.setVisibleLayers([]);
@@ -334,9 +334,9 @@ define([
 					var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 					
 					if (self.managementLayerCheckBox.checked) {
-						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.flatten(_.values(self._data.layers.management)));
+						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.flatten(_.values(self._data[self._region].layers.management)));
 						if (management != "") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.management[this.value]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.management[this.value]);
 							domAttr.set(self.managementLayerCheckBox, "disabled", false);
 						} else {
 							domAttr.set(self.managementLayerCheckBox, "disabled", true);
@@ -345,9 +345,9 @@ define([
 					}
 					
 					if (self.hazardLayerCheckBox.checked) {
-						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.hazard["all-layer-index"][0], self._data.layers.hazard["all-layer-index"][1]+1));
+						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.hazard["all-layer-index"][0], self._data[self._region].layers.hazard["all-layer-index"][1]+1));
 						if (management != "" && hazard != "total") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.hazard[management][hazard][climate]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.hazard[management][hazard][climate]);
 							domAttr.set(self.hazardLayerCheckBox, "disabled", false);
 						} else {
 							domAttr.set(self.hazardLayerCheckBox, "disabled", true);
@@ -356,9 +356,9 @@ define([
 					}
 					
 					if (self.damageLayerCheckBox.checked) {
-						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.damage["all-layer-index"][0], self._data.layers.damage["all-layer-index"][1]+1));
+						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.damage["all-layer-index"][0], self._data[self._region].layers.damage["all-layer-index"][1]+1));
 						if (hazard != "total" && damage != "total") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.damage[damage][management][hazard][climate]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.damage[damage][management][hazard][climate]);
 							domAttr.set(self.damageLayerCheckBox, "disabled", false);
 						} else {
 							domAttr.set(self.damageLayerCheckBox, "disabled", true);
@@ -373,10 +373,10 @@ define([
 				on(self.managementLayerCheckBox, "change", function(){
 					var management = self.managementTypeSelect.value;
 					
-					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers[this.value]["all-layer-index"][0], self._data.layers[this.value]["all-layer-index"][1]+1));
+					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers[this.value]["all-layer-index"][0], self._data[self._region].layers[this.value]["all-layer-index"][1]+1));
 					if (this.checked) {
 						if (management != "") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.management[management]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.management[management]);
 						}
 					}
 					self.updateMapLayers(visibleLayers, self.mapLayer);
@@ -394,9 +394,9 @@ define([
 					var damage = self.damageSelect.value;
 					var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 					
-					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.hazard["all-layer-index"][0], self._data.layers.hazard["all-layer-index"][1]+1));
+					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.hazard["all-layer-index"][0], self._data[self._region].layers.hazard["all-layer-index"][1]+1));
 					if (management != "" && management != "existing" && hazard != "total") {
-						var visibleLayers = _.union(visibleLayers, self._data.layers.hazard[management][hazard][climate]);
+						var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.hazard[management][hazard][climate]);
 						domAttr.set(self.hazardLayerCheckBox, "disabled", false);
 					} else {
 						domAttr.set(self.hazardLayerCheckBox, "disabled", true);
@@ -404,9 +404,9 @@ define([
 					self.updateMapLayers(visibleLayers, self.mapLayer);
 					
 					if (self.damageLayerCheckBox.checked) {
-						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.damage["all-layer-index"][0], self._data.layers.damage["all-layer-index"][1]+1));
+						var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.damage["all-layer-index"][0], self._data[self._region].layers.damage["all-layer-index"][1]+1));
 						if (hazard != "total" && damage != "total") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.damage[damage][management][hazard][climate]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.damage[damage][management][hazard][climate]);
 							domAttr.set(self.damageLayerCheckBox, "disabled", false);
 						} else {
 							domAttr.set(self.damageLayerCheckBox, "disabled", true);
@@ -426,10 +426,10 @@ define([
 					var hazard = self.hazardSelect.value;
 					var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 					
-					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers[this.value]["all-layer-index"][0], self._data.layers[this.value]["all-layer-index"][1]+1));
+					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers[this.value]["all-layer-index"][0], self._data[self._region].layers[this.value]["all-layer-index"][1]+1));
 					if (this.checked) {
 						if (management != "" && hazard != "total") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.hazard[management][hazard][climate]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.hazard[management][hazard][climate]);
 						}
 					}
 					self.updateMapLayers(visibleLayers, self.mapLayer);
@@ -447,9 +447,9 @@ define([
 					var damage = this.value;
 					var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 					
-					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.damage["all-layer-index"][0], self._data.layers.damage["all-layer-index"][1]+1));
+					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.damage["all-layer-index"][0], self._data[self._region].layers.damage["all-layer-index"][1]+1));
 					if (hazard != "total" && damage != "total") {
-						var visibleLayers = _.union(visibleLayers, self._data.layers.damage[damage][management][hazard][climate]);
+						var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.damage[damage][management][hazard][climate]);
 						domAttr.set(self.damageLayerCheckBox, "disabled", false);
 					} else {
 						domAttr.set(self.damageLayerCheckBox, "disabled", true);
@@ -466,10 +466,10 @@ define([
 					var damage = self.damageSelect.value;
 					var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 					
-					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.damage["all-layer-index"][0], self._data.layers.damage["all-layer-index"][1]+1));
+					var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.damage["all-layer-index"][0], self._data[self._region].layers.damage["all-layer-index"][1]+1));
 					if (this.checked) {
 						if (hazard != "total" && damage != "total") {
-							var visibleLayers = _.union(visibleLayers, self._data.layers.damage[damage][management][hazard][climate]);
+							var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.damage[damage][management][hazard][climate]);
 						}
 					}
 					self.updateMapLayers(visibleLayers, self.mapLayer);
@@ -491,12 +491,12 @@ define([
 						var management = self.managementTypeSelect.value;
 						var hazard = self.hazardSelect.value;
 						var damage = self.damageSelect.value;
-						var climate = self._interface.controls.slider.climate[self.climateSlider.get("value")];
+						var climate = self._interface.region[self._region].controls.slider.climate.labels[self.climateSlider.get("value")];
 						
 						if (self.hazardLayerCheckBox.checked) {
-							var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.hazard["all-layer-index"][0], self._data.layers.hazard["all-layer-index"][1]+1));
-							if (management != "" && management != "existing" && hazard != "total") {
-								var visibleLayers = _.union(visibleLayers, self._data.layers.hazard[management][hazard][climate]);
+							var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.hazard["all-layer-index"][0], self._data[self._region].layers.hazard["all-layer-index"][1]+1));
+							if (management != "" && hazard != "total") {
+								var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.hazard[management][hazard][climate]);
 								domAttr.set(self.hazardLayerCheckBox, "disabled", false);
 							} else {
 								domAttr.set(self.hazardLayerCheckBox, "disabled", true);
@@ -505,9 +505,9 @@ define([
 						}
 						
 						if (self.damageLayerCheckBox.checked) {
-							var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data.layers.damage["all-layer-index"][0], self._data.layers.damage["all-layer-index"][1]+1));
+							var visibleLayers = _.difference(self.mapLayer.visibleLayers, _.range(self._data[self._region].layers.damage["all-layer-index"][0], self._data[self._region].layers.damage["all-layer-index"][1]+1));
 							if (hazard != "total" && damage != "total") {
-								var visibleLayers = _.union(visibleLayers, self._data.layers.damage[damage][management][hazard][climate]);
+								var visibleLayers = _.union(visibleLayers, self._data[self._region].layers.damage[damage][management][hazard][climate]);
 								domAttr.set(self.damageLayerCheckBox, "disabled", false);
 							} else {
 								domAttr.set(self.damageLayerCheckBox, "disabled", true);

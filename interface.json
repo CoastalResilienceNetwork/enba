@@ -105,10 +105,10 @@
 	"region": {
 		"Monterey": {
 			"extent": {
-				"xmin": -1.36189391907E7,
-				"ymin": 4362453.298600003,
-				"xmax": -1.3538941220800001E7,
-				"ymax": 4486926.618699998,
+				"xmin":-13569110.647599999,
+				"ymin":4382664.2736999989,
+				"xmax":-13543929.147699999,
+				"ymax":4421345.2854999993,
 				"spatialReference": {
 					"wkid": 102100,
 					"latestWkid": 3857
@@ -118,19 +118,20 @@
 				"select": {
 					"hazard": {
 						"options": [
-							{ "name": "Chronic Erosion", "value": "erosion" },
-							{ "name": "Chronic Flood", "value": "flood" },
-							{ "name": "Event Flood", "value": "event" }
+							{ "name": "Long-term Erosion", "value": "erosion" },
+							{ "name": "Long-term Flood", "value": "flood" },
+							{ "name": "Short-term Flood", "value": "event" }
 						]
 					},
 					"damage": {
 						"label": "Damage (At Risk)",
 						"options": [
-							{ "name": "Public", "value": "public" },
-							{ "name": "Residential", "value": "residential" },
 							{ "name": "Agricultural", "value": "agricultural" },
+							{ "name": "Commercial", "value": "commercial" },
 							{ "name": "Industrial", "value": "industrial" },
-							{ "name": "Commercial", "value": "commercial" }
+							{ "name": "Miscellaneous", "value": "miscellaneous" },
+							{ "name": "Public", "value": "public" },
+							{ "name": "Residential", "value": "residential" }
 						]
 					},
 					"discount": {
@@ -149,7 +150,7 @@
 				},
 				"check": {
 					"management": {
-						"show": false,
+						"show": true,
 						"checked": false
 					},
 					"hazard": {
