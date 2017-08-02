@@ -49,14 +49,19 @@ define([
 			   width: 510,
 			   _state: {},
 			   _firstLoad: true,
+			   _saveAndShare: true,
 
                activate: function () {
 				    var self = this;
 					//process this._state if a populated object from setState exists
-					if (!_.isEmpty(this._state) && this._firstLoad) {
+					if (!_.isEmpty(this._state) && this._saveAndShare) {
+						this._saveAndShare = false;
 						this.enbaTool.initializeMap();
-						
 						window.setTimeout(function() {
+							 self.enbaTool.regionSelect.value = self._state.controls.region;
+							 self.enbaTool._region =  self._state.controls.region;
+							 self.enbaTool.updateInterface();
+							 
 							 for (var control in self._state.controls.radiocheck) {
 								 for (property in self._state.controls.radiocheck[control]) {
 									 self.enbaTool[control][property] = self._state.controls.radiocheck[control][property];
@@ -65,7 +70,7 @@ define([
 
 							 for (var control in self._state.controls.selects) {
 								 for (property in self._state.controls.selects[control]) {
-									 self.enbaTool[control][property] = self._state.controls.selects[control][property];
+									 self.enbaTool[control + "Select"][property] = self._state.controls.selects[control][property];
 								 }
 							 }
 
@@ -78,7 +83,7 @@ define([
 							var management = self.enbaTool.managementTypeSelect.value;
 							var hazard = self.enbaTool.hazardSelect.value;
 							var damage = self.enbaTool.damageSelect.value;
-							var climate = self.enbaTool._interface.exposure.controls.slider.climate[self.enbaTool.climateYearSliderDamages.get("value")];
+							var climate = self.enbaTool._interface.region[self._state.controls.region].controls.slider.climate[self.enbaTool.climateSlider.get("value")];
 							
 							var visibleLayers = [];
 							if (self.enbaTool.managementLayerCheckBox.checked) {
@@ -112,30 +117,29 @@ define([
 							}
 							self.enbaTool.updateMapLayers(visibleLayers, self.enbaTool.mapLayer);
 							 
-							self.enbaTool.chart._filter_value =  self._state.controls.selects.discountRateSelect.value;
-							self.enbaTool.chart._storm_value =  self._state.controls.selects.stormSelect.value;
-							
-							self.enbaTool.updateLineChart();
-							self.enbaTool.updateExposureResults();
+							self.enbaTool.updateLineChart2();
+							self.enbaTool.updateExposureResults2();
 
 							self._state = {};
+							
+							self._firstLoad = false;
 						}, 1000);
 					} else {
 						this.enbaTool.showTool();
 					}
-					
-					if (this._firstLoad) {
-						this._firstLoad = false;
-					}
                },
 
                deactivate: function () {
-                   this.enbaTool.hideTool();
+				   if (_.has(this.enbaTool, "hideTool")) { 
+						this.enbaTool.hideTool();
+				   }
                },
 
                hibernate: function () {
-				   this.enbaTool.closeTool();
-				   this.enbaTool.resetInterface();
+				   if (_.has(this.enbaTool,"closeTool")) {
+						this.enbaTool.closeTool();
+						this.enbaTool.resetInterface();
+				   }
                },
 
                initialize: function (frameworkParameters) {
@@ -160,25 +164,30 @@ define([
 				   state.controls.selects = {};
 				   state.controls.sliders = {};
 				   state.controls.radiocheck = {};
-
-                   state.controls.selects.managementTypeSelect = {
+				   state.controls.region =  this.enbaTool.regionSelect.value;
+				   
+                   state.controls.selects.managementType = {
 						"value": this.enbaTool.managementTypeSelect.value
 				   }
-				   state.controls.selects.hazardSelect = {
+				   state.controls.selects.hazard = {
 						"value": this.enbaTool.hazardSelect.value
 				   }
-				   state.controls.selects.damageSelect = {
+				   state.controls.selects.damage = {
 						"value": this.enbaTool.damageSelect.value
 				   }
-				   state.controls.selects.discountRateSelect = {
+				   state.controls.selects.discountRate = {
 						"value": this.enbaTool.discountRateSelect.value
 				   }
-				   state.controls.selects.stormSelect = {
+				   state.controls.selects.storm = {
 						"value": this.enbaTool.stormSelect.value
 				   }
 				   
-				   state.controls.sliders.climateYearSliderDamages = {
-						"value": this.enbaTool.climateYearSliderDamages.get("value")
+				   state.controls.sliders.climateSlider = {
+						"value": this.enbaTool.climateSlider.get("value")
+				   }
+				   
+				   state.controls.sliders.opacitySlider = {
+						"value": this.enbaTool.opacitySlider.get("value")
 				   }
 
 				   state.controls.radiocheck.managementLayerCheckBox = {

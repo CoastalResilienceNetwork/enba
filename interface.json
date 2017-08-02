@@ -1,79 +1,241 @@
 {
-	"service": "http://services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
-	"extents": {
-		"initial": {
-			"xmin": -13288721.369912772,
-			"ymin": 4035936.3860100782,
-			"xmax": -13245012.962495957,
-			"ymax": 4075072.7842828752,
-			"spatialReference": {
-				"wkid": 102100,
-				"latestWkid": 3857
-			}
-		}
-	},
-	"exposure": {
-		"tooltips": {
-			"info-circle": {
-				"management": "Armoring-based solutions favor protection through construction of sea walls, levees, and other armoring. Nature-based approaches favor ecosystems for protection including restoration of habitat and other natural processes.",
-				"hazard": "Spatial extent for different coastal hazards (storm wave impact, coastal storm flooding, coastal erosion, and rising tide levels) that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
-				"damage": "Estimated damages for several different classes of coastal assets including built structures and infrastructure (public buildings and residential), agriculture, and recreation.",
-				"climate": "Future planning horizons representing the impact of climate change on future damages and benefits."
+"service": "http://dev.services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
+	"tooltips": {
+		"info-circle": {
+			"region": { 
+				"message":"Geographic areas where economic studies on climate adaptation have been conducted.",
+				"orientation": "right"
 			},
-			"controls": {
-				"select": {
-					"discount": "Discount rate refers to the interest rate used to express future benefits at today’s equivalent value (or 'net present value'). The discount rate reduces the value of future benefits by taking into account the loss in monetary value over time and/or the uncertainty of future benefits (the higher the discount rate, the greater the uncertainty). A 3% discount rate is typically recommended for decision making.",
-					"storm":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance."
-				},
-				"checkbox": {
-					"ecosystem":"The net benefits and/or declines in services from the environment to humans converted to monetary units based on a habitat equivalency analysis (HEA). HEA produces estimates that are converted to service-acre years (SAY), or the equivalent of the ecosystem services provided by one acre of saltwater wetland for one year. The value of one SAY was assumed to be worth $5,000 per year."
-				}
+			"management": { 
+				"message":"Armoring-based solutions favor protection through construction of sea walls, levees, and other shoreline hardening measures. Nature-based approaches favor ecosystems for protection including restoration of habitat, managed retreat, beach nourishment, and/or other natural processes.",
+				"orientation": "right"
 			},
-			"chart": {
-				"x-axis":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance.",
-				"y-axis":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy. Benefits and costs are discounted and summed through each planning horizon to produce a 'net present value' of benefits."
+			"hazard": { 
+				"message":"Spatial extent for different coastal hazards that may affect coastal assets.  Impact zones were used for estimating damages and benefits across multiple planning horizons.",
+				"orientation": "top"
 			},
-			"results": {
-				"stat-number":"Difference in net benefits ($ millions) between nature-based versus armoring-based adaptation strategies."
+			"damage": { 
+				"message":"Estimated damages for several different classes of coastal assets such as built structures, infrastructure, agriculture, etc.",
+				"orientation": "top"
+			},
+			"climate": { 
+				"message":"Future planning horizons representing the impact of climate change on future damages and benefits.",
+				"orientation": "right"
 			}
 		},
 		"controls": {
-			"management":[
-				{ "name": " -- ", "value": "" },
-				{ "name": "Armoring-based", "value": "armoring" },
-				{ "name": "Nature-based", "value": "nature-based" }
-			],
-			"hazard":[
-				{ "name": " -- ", "value": "total" },
-				{ "name": "Storm Flood", "value": "storm" },
-				{ "name": "Storm Wave", "value": "wave" },
-				{ "name": "Erosion", "value": "erosion" },
-				{ "name": "Rising Tide", "value": "tide" }
-			],
-			"damage":[
-				{ "name": " -- ", "value": "total" },
-				{ "name": "Public Buildings", "value": "building" },
-				{ "name": "Residential", "value": "residential" },
-				{ "name": "Agricultural", "value": "agricultural" },
-				{ "name": "Recreational", "value": "recreational" }
-			],
-			"discount":[
-				{ "name": "0%", "value": 0 },
-				{ "name": "1%", "value": 1 },
-				{ "name": "3%", "value": 3 },
-				{ "name": "5%", "value": 5 }
-			],
-			"storm":[
-				{ "name": "1 in 20", "value": 20 },
-				{ "name": "1 in 50", "value": 50 },
-				{ "name": "1 in 75", "value": 75 },
-				{ "name": "1 in 100", "value": 100 },
-				{ "name": "1 in 200", "value": 200 }
-			],
-			"slider": {
-				"climate": ["Current", "2030", "2060", "2100"],
-				"discountRate":[0, 1, 3, 5],
-				"storm":[20, 50, 75, 100, 200]
+			"select": {
+				"discount": { 
+					"message":"Discount rate refers to the interest rate used to express future benefits at today’s equivalent value (or 'net present value'). The discount rate reduces the value of future benefits by taking into account the loss in monetary value over time and/or the uncertainty of future benefits (the higher the discount rate, the greater the uncertainty). A 1-3% discount rate is typically recommended for decision making.",
+					"orientation": "top"
+				},
+				"storm": { 
+					"message":"The frequency at which a modeled storm is expected to occur. For example, a 1 in 100 year storm is extpected to have a 1% chance of occurring in any given year while a 1 in 50 year storm a 2% chance.",
+					"orientation": "top"
+				}
+			},
+			"checkbox": {
+				"ecosystem": { 
+					"message":"The net benefits and/or declines in services from the environment to humans converted to monetary units based on a habitat equivalency analysis (HEA). HEA produces estimates that are converted to service-acre years (SAY), or the equivalent of the ecosystem services provided by one acre of saltwater wetland for one year. The value of one SAY was assumed to be worth $5,000 per year.",
+					"orientation": "top"
+				}
+			}
+		},
+		"chart": {
+			"x-axis": { 
+				"message":"Future planning horizons representing the impact of climate change on future damages and benefits",
+				"orientation": "top"
+			},
+			"y-axis": { 
+				"message":"Net Benefits represent the difference between benefits, measured as damages avoided (plus ancillary benefits from investment in ecosystem services if specified) and costs, consisting of the costs associated with constructing and carrying out the adaptation strategy. Benefits and costs are discounted and summed through each planning horizon to produce a 'net present value' of benefits.",
+				"orientation": "right"
+			},
+			"legend-cca": {
+				"message":"Armoring-based solutions favor protection through construction of sea walls, levees, and other shoreline hardening measures.",
+				"orientation": "top"
+			},
+			"legend-nba": {
+				"message":"Nature-based approaches favor ecosystems for protection including restoration of habitat, managed retreat, beach nourishment, and/or other natural processes.",
+				"orientation": "top"
+			}
+		},
+		"results": {
+			"stat-number": { 
+				"message":"Difference in net benefits ($) between nature-based versus armoring-based adaptation strategies.",
+				"orientation": "top"
+			}
+		}
+	},
+	"controls": {
+		"select": {
+			"management": {
+				"options": [
+					{ "name": "Armoring-based", "value": "armoring" },
+					{ "name": "Nature-based", "value": "nature-based" }
+				]
+			},
+			"damage": {
+				"label": "Damage (Estimate)",
+				"options": []
+			},
+			"discount": {
+				"options": [
+					{ "name": "0%", "value": 0 },
+					{ "name": "1%", "value": 1 },
+					{ "name": "3%", "value": 3 },
+					{ "name": "5%", "value": 5 }
+				]
+			},
+			"storm": {
+				"options": [
+					{ "name": "1 in 20", "value": 20 },
+					{ "name": "1 in 50", "value": 50 },
+					{ "name": "1 in 75", "value": 75 },
+					{ "name": "1 in 100", "value": 100 },
+					{ "name": "1 in 200", "value": 200 }
+				]
+			}
+		},
+		"slider": {
+			"climate": { 
+				"labels": ["Current", "2030", "2060", "2100"]
+			}
+		}
+	},
+	"region": {
+		"Monterey": {
+			"extent": {
+				"xmin":-13569110.647599999,
+				"ymin":4382664.2736999989,
+				"xmax":-13543929.147699999,
+				"ymax":4421345.2854999993,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": "Long-term Erosion", "value": "erosion" },
+							{ "name": "Long-term Flood", "value": "flood" },
+							{ "name": "Short-term Flood", "value": "event" }
+						]
+					},
+					"damage": {
+						"label": "Damage (At Risk)",
+						"options": [
+							{ "name": "Agricultural", "value": "agricultural" },
+							{ "name": "Commercial", "value": "commercial" },
+							{ "name": "Industrial", "value": "industrial" },
+							{ "name": "Miscellaneous", "value": "miscellaneous" },
+							{ "name": "Public", "value": "public" },
+							{ "name": "Residential", "value": "residential" }
+						]
+					},
+					"discount": {
+						"defaultValue": 1,
+						"disabled": true
+					},
+					"storm": {
+						"defaultValue": 100,
+						"disabled": true
+					}
+				},
+				"slider": {
+					"climate": { 
+						"labels": ["Current", "2030", "2060", "2100"]
+					}
+				},
+				"check": {
+					"management": {
+						"show": true,
+						"checked": false
+					},
+					"hazard": {
+						"show": true,
+						"checked": false
+					},
+					"damages": {
+						"show": true,
+						"checked": false
+					},
+					"ecosystem": {
+						"show": false,
+						"checked": false
+					}
+				}
+			},
+			"download": {
+				"report":"HOSTNAME-methods/ENBA_Monterey.pdf"
+			}
+		},
+		"Ventura": {
+			"extent": {
+				"xmin": -13288721.369912772,
+				"ymin": 4035936.3860100782,
+				"xmax": -13245012.962495957,
+				"ymax": 4075072.7842828752,
+				"spatialReference": {
+					"wkid": 102100,
+					"latestWkid": 3857
+				}
+			},
+			"controls": {
+				"select": {
+					"hazard": {
+						"options": [
+							{ "name": "Storm Flood", "value": "storm" },
+							{ "name": "Storm Wave", "value": "wave" },
+							{ "name": "Erosion", "value": "erosion" },
+							{ "name": "Rising Tide", "value": "tide" }
+						]
+					},
+					"damage": {
+						"label": "Damage (Estimate)",
+						"options": [
+							{ "name": "Public Buildings", "value": "building" },
+							{ "name": "Residential", "value": "residential" },
+							{ "name": "Agricultural", "value": "agricultural" },
+							{ "name": "Recreational", "value": "recreational" }
+						]
+					},
+					"discount": {
+						"defaultValue": 3,
+						"disabled": false
+					},
+					"storm": {
+						"defaultValue": 100,
+						"disabled": false
+					}
+				},
+				"slider": {
+					"climate": { 
+						"labels": ["Current", "2030", "2060", "2100"]
+					}
+				},
+				"check": {
+					"management": {
+						"show": true,
+						"checked": false
+					},
+					"hazard": {
+						"show": true,
+						"checked": false
+					},
+					"damages": {
+						"show": true,
+						"checked": false
+					},
+					"ecosystem": {
+						"show": true,
+						"checked": true
+					}
+				}
+			},
+			"download": {
+				"report":"HOSTNAME-methods/ENBA_Ventura.pdf"
 			}
 		}
 	}
