@@ -130,12 +130,16 @@ define([
                },
 
                deactivate: function () {
-                   this.enbaTool.hideTool();
+				   if (_.has(this.enbaTool, "hideTool")) { 
+						this.enbaTool.hideTool();
+				   }
                },
 
                hibernate: function () {
-				   this.enbaTool.closeTool();
-				   this.enbaTool.resetInterface();
+				   if (_.has(this.enbaTool,"closeTool")) {
+						this.enbaTool.closeTool();
+						this.enbaTool.resetInterface();
+				   }
                },
 
                initialize: function (frameworkParameters) {

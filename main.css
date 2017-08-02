@@ -269,6 +269,7 @@ margin-right: 5px;
 margin-right: 7px;
 }
 
+
 /* base tooltip element */
 .enba-tooltip {
 position:absolute;
@@ -398,6 +399,15 @@ background:#ffffff;
 pointer-events: none;
 opacity:1.0;
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	.plugin-enba .styled-select:after {
+		font: 11px FontAwesome;
+		right: 0px;
+		top: 0px;
+		padding: 10px 7px;
+	}
+}
  
 .plugin-enba .styled-select select {
 -webkit-appearance: none;
@@ -435,6 +445,15 @@ font: 12px FontAwesome;
 top: 6px;
 right: 5px;
 padding: 0 0 2px;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	.plugin-enba .results-select:after {
+		font: 10px FontAwesome;
+		top: 0px;
+		right: 0px;
+		padding: 7px 7px;
+	}
 }
 
 .plugin-enba .results-select select:disabled {

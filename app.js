@@ -1491,7 +1491,8 @@ define([
 				self.updateExposureResults2();
 			}
 			
-			this.updateCurrentClimateValue = function(d, strategy, transition = false) {
+			this.updateCurrentClimateValue = function(d, strategy, transition) {
+				var transition = (_.isUndefined(transition)) ? false : transition;
 				var checked = this.ecosystemCheckBox.checked;
 				
 				this.chart.plot.selectAll('circle.group')
@@ -1746,7 +1747,8 @@ define([
                 return template;
             }
 
-			this.showMessageDialog = function(node, message, position, orientation = "top") {
+			this.showMessageDialog = function(node, message, position, orientation) {
+				var orientation = (_.isUndefined(orientation)) ? "top" : orientation;
 				self.tip.innerHTML = message;
 				domStyle.set(self.tip, { "display": "block" });
 				var offset = 3;
