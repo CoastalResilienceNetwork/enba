@@ -302,7 +302,7 @@ define([
 				on(this.downloadReport,"click", function(){
 					 if (self._region && self._region != "") {
 						var url = self._interface.region[self._region].download.report;
-						url = url.replace("HOSTNAME-", window.location.href);
+						url = url.replace("HOSTNAME-", window.location.href).replace("#","");
 						window.open(url, "_blank");
 					 }
 				});
