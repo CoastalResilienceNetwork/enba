@@ -2,8 +2,5 @@
     "css": [
 		"plugins/enba/main.css"
 		
-    ],
-    "use": {
-		"underscore": { "attach": "_" }
-    }
+    ]
 }
