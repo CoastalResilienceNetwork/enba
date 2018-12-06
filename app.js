@@ -61,7 +61,7 @@ define([
 		
 		{
 
-		var enbaTool = function(plugin, appData, enbaConfig, templates){
+		var enbaTool = function(plugin, appData, enbaConfig){
 			this._legend = plugin.legendContainer;
 			this._map = plugin.map;
 			this._app = plugin.app;
@@ -80,7 +80,6 @@ define([
 			this._region = "";
 			this._data = JSON.parse(appData);
 			this._interface = JSON.parse(enbaConfig);
-			this._$templates = $('<div>').append($($.trim(templates)))
 			
 			var self = this;
 			this.parameters = {};
@@ -1741,11 +1740,6 @@ define([
 			this.formatter = function(value,n) {
 				return Math.round(value/n);
 			}
-			
-			this.getTemplate = function(name) {
-                var template = _.template($.trim(this._$templates.find('#' + name).html()));
-                return template;
-            }
 
 			this.showMessageDialog = function(node, message, position, orientation) {
 				var orientation = (_.isUndefined(orientation)) ? "top" : orientation;
