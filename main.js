@@ -28,10 +28,9 @@ define([
 		"underscore",
 		"./app",
 		"dojo/text!plugins/enba/data.json",
-		"dojo/text!plugins/enba/interface.json",
-		"dojo/text!./templates.html"
+		"dojo/text!plugins/enba/interface.json"
        ],
-       function (declare, PluginBase, parser, domClass, domStyle, domAttr, domGeom, d3, _, enba, appData, appConfig, templates) {
+       function (declare, PluginBase, parser, domClass, domStyle, domAttr, domGeom, d3, _, enba, appData, appConfig) {
            return declare(PluginBase, {
                toolbarName: "Economics of Nature-Based Adaptation",
                toolbarType: "sidebar",
@@ -144,7 +143,7 @@ define([
                    };
                    domClass.add(this.container, "claro");
 				   domClass.add(this.container, "plugin-enba");
-					this.enbaTool = new enba(this, appData, appConfig, templates);
+					this.enbaTool = new enba(this, appData, appConfig);
 					this.enbaTool.initialize(this.enbaTool);
 					enbaTool = this.enbaTool;
 					domStyle.set(this.container.parentNode, {
