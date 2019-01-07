@@ -1,5 +1,5 @@
 {
-"service": "http://services.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
+"service": "https://services2.coastalresilience.org/arcgis/rest/services/California/ENBA/MapServer",
 	"tooltips": {
 		"info-circle": {
 			"region": { 
